@@ -1,0 +1,36 @@
+<div class="container mx-auto p-6">
+  <h1 class="text-3xl font-bold mb-6 text-center text-green-600">Sales Records</h1>
+
+  <table class="w-full border-collapse border border-gray-300">
+    <thead>
+      <tr class="bg-green-500 text-white">
+        <th class="border border-gray-300 px-4 py-2">ID</th>
+        <th class="border border-gray-300 px-4 py-2">Customer</th>
+        <th class="border border-gray-300 px-4 py-2">Product</th>
+        <th class="border border-gray-300 px-4 py-2">Amount</th>
+        <th class="border border-gray-300 px-4 py-2">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+        <% @sales.each do |sale| %>
+            <tr class="bg-gray-100 hover:bg-gray-200 cursor-pointer" onclick="window.location='<%= sale_path(sale) %>'">
+            <td class="border border-gray-300 px-4 py-2"><%= sale.id %></td>
+            <td class="border border-gray-300 px-4 py-2"><%= sale.customer.name %></td>
+            <td class="border border-gray-300 px-4 py-2"><%= sale.old_car.model %></td>
+            <td class="border border-gray-300 px-4 py-2"><%= number_to_currency(sale.sale_price) %></td>
+            <td class="border border-gray-300 px-4 py-2"><%= sale.created_at.strftime("%d %b %Y") %></td>
+            </tr>
+        <% end %>
+    </tbody>
+  </table>
+
+  <div class="mt-6 flex justify-center">
+    <% if @sales.prev_page %>
+      <%= link_to 'Previous', sales_path(page: @sales.prev_page), class: "px-4 py-2 bg-gray-300 rounded mr-2 hover:bg-gray-400" %>
+    <% end %>
+
+    <% if @sales.next_page %>
+      <%= link_to 'Next', sales_path(page: @sales.next_page), class: "px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600" %>
+    <% end %>
+  </div>
+</div>
